@@ -1,0 +1,25 @@
+﻿<Window x:Class="graph2_projet_integrateur.PreposeAdmettre"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:graph2_projet_integrateur"
+        mc:Ignorable="d"
+        Title="Admettre Patient" Height="388" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DataGrid HorizontalAlignment="Left" Height="42" Margin="257,10,0,0" VerticalAlignment="Top" Width="288"/>
+        <Label Content="Chirurgie&#xD;&#xA;programmée" HorizontalAlignment="Left" Margin="88,93,0,0" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="191,104,0,0" VerticalAlignment="Top" Width="120"/>
+        <DatePicker HorizontalAlignment="Left" Margin="191,154,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Admission" HorizontalAlignment="Left" Margin="88,152,0,0" VerticalAlignment="Top"/>
+        <DatePicker HorizontalAlignment="Left" Margin="191,207,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Chirurgie" HorizontalAlignment="Left" Margin="88,205,0,0" VerticalAlignment="Top"/>
+        <Label Content="Médecin" HorizontalAlignment="Left" Margin="449,100,0,0" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="534,104,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Lit" HorizontalAlignment="Left" Margin="449,150,0,0" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="534,154,0,0" VerticalAlignment="Top" Width="120"/>
+        <CheckBox Content="Téléviseur" HorizontalAlignment="Left" Margin="447,211,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked"/>
+        <CheckBox Content="Téléphone" HorizontalAlignment="Left" Margin="579,211,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

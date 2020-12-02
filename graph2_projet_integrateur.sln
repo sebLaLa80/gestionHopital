@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "graph2_projet_integrateur", "graph2_projet_integrateur\graph2_projet_integrateur.csproj", "{7115B997-F669-44ED-8FF0-7EB8036543BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7115B997-F669-44ED-8FF0-7EB8036543BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7115B997-F669-44ED-8FF0-7EB8036543BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7115B997-F669-44ED-8FF0-7EB8036543BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7115B997-F669-44ED-8FF0-7EB8036543BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B4C3C53-AC38-4C5B-994C-77BC357E24FF}
+	EndGlobalSection
+EndGlobal
