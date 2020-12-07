@@ -42,39 +42,66 @@ namespace graph2_projet_integrateur
                 
                 if (utilisateur == "admin" && motPasse == "admin")
                 {
-                    Administration admin = new Administration();
-                    admin.ShowDialog();
-
+                    ConnectionAdministrateur(); 
                 }
                 else if (utilisateur == "prep" && motPasse == "prep")
                 {
-                    Prepose prep = new Prepose();
-                    prep.ShowDialog();
+                    ConnectionPrepose(); 
                 }
                 else if (utilisateur == "medecin" && motPasse == "medecin")
                 {
-
+                    ConnectionMedecin(); 
                 }
                 else
                 {
-                    MessageBox.Show("Les informations saisies ne sont pas valides.",
-                    "Attention", MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-
-                    input_username.Text = String.Empty;
-                    input_password.Password = String.Empty;
-                    input_username.Focus();
+                    InformationInvalide(1); 
                 }
             }
             else
             {
+                InformationInvalide(2);
+            }
+        }
+
+        private void InformationInvalide(int codeErreur)
+        {
+            if(codeErreur == 1)
+            {
+                MessageBox.Show("Les informations saisies ne sont pas valides.",
+                    "Attention", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                input_username.Text = String.Empty;
+                input_password.Password = String.Empty;
+                input_username.Focus();
+            } else if (codeErreur == 2)
+            {
                 MessageBox.Show("Vous devez saisir votre nom d'utilisateur et votre mot de passe.",
-                "Attention",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+                    "Attention",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
                 // Nous redonnons le focus à l'élément txtUtilisateur.
                 input_username.Focus();
             }
+
+        }
+
+        private void ConnectionMedecin()
+        {
+            FormMedecin fm = new FormMedecin();
+            fm.ShowDialog();
+        }
+
+        private void ConnectionPrepose()
+        {
+            Prepose prep = new Prepose();
+            prep.ShowDialog();
+        }
+
+        private void ConnectionAdministrateur()
+        {
+            Administration admin = new Administration();
+            admin.ShowDialog();
         }
     }
 }

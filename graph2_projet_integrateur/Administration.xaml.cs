@@ -20,6 +20,9 @@ namespace graph2_projet_integrateur
     /// </summary>
     public partial class Administration : Window
     {
+
+        bool isAjouterMedOn = true;
+        bool medecinSupp = false; 
         public Administration()
         {
             InitializeComponent();
@@ -47,9 +50,7 @@ namespace graph2_projet_integrateur
             dynamic row = dataGrid1.SelectedItem;
             string s_nss = row.NSS;
 
-
             var query =
-
             from p in MainWindow.myBDD.Patients
             join ar in MainWindow.myBDD.Assurances on p.IDAssurance equals ar.IDAssurance
             join ad in MainWindow.myBDD.Admissions on p.NSS equals ad.NSS
@@ -72,47 +73,62 @@ namespace graph2_projet_integrateur
 
         private void liste_medecin_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
+            if (medecinSupp) //Une condition pour éviter que la méthode s'enclenche toute seul après avoir supprimé et aille une sélection null 
             {
-                Medecin med = liste_medecin.SelectedItem as Medecin;
-                txt_nom.Text = med.Nom.Trim();
-                txt_prenom.Text = med.Prenom.Trim();
+                try
+                {
+                    Medecin med = liste_medecin.SelectedItem as Medecin;
+                    txt_nom.Text = med.Nom.Trim();
+                    txt_prenom.Text = med.Prenom.Trim();
+                }
+                catch (Exception ex)
+                {
+                    txt_nom.Text = String.Empty;
+                    txt_prenom.Text = String.Empty;
+                }
             }
-            catch (Exception ex)
-            {
-                txt_nom.Text = String.Empty;
-                txt_prenom.Text = String.Empty;
-            }
-            
-            
+            medecinSupp = false; 
         }
 
         private void ajouter_med_Click(object sender, RoutedEventArgs e)
         {
-            Medecin newMedecin = new Medecin();
-            newMedecin.Nom = txt_nom.Text;
-            newMedecin.Prenom = txt_prenom.Text;
-            newMedecin.IDMedecin = (MainWindow.myBDD.Medecins.Count() + 1).ToString();
-
-           var result = MessageBox.Show($"Êtes-vous sur de vouloir ajouter {newMedecin.Prenom} {newMedecin.Nom}, numéro ID : {newMedecin.IDMedecin} ?"
-                , "Confirmation", MessageBoxButton.YesNo);
-
-            if (result == MessageBoxResult.Yes)
+            if (isAjouterMedOn) //Une condition pour alterner entre "ajouter" et "confirmer"
             {
-                try
-                {
-                    MainWindow.myBDD.Medecins.Add(newMedecin);
-                    MainWindow.myBDD.SaveChanges();
-                    MessageBox.Show("Médecin ajouté avec succès !");
-                    liste_medecin.DataContext = MainWindow.myBDD.Medecins.ToList();
-
-                }
-                catch (Exception ex)
-                {
-
-                    MessageBox.Show(ex.Message);
-                }
+                isAjouterMedOn = AjouterMedecin();
+            } else
+            {
+                isAjouterMedOn = ConfirmerMedecin();
             }
+        }
+        private bool ConfirmerMedecin()
+        {
+            if (!String.IsNullOrEmpty(txt_nom.Text) && !String.IsNullOrEmpty(txt_prenom.Text))
+            {
+                Medecin newMedecin = new Medecin();
+                newMedecin.Nom = txt_nom.Text;
+                newMedecin.Prenom = txt_prenom.Text;
+                newMedecin.IDMedecin = (MainWindow.myBDD.Medecins.Count() + 1).ToString();
+                MainWindow.myBDD.Medecins.Add(newMedecin);
+                MainWindow.myBDD.SaveChanges();
+                MessageBox.Show("Médecin ajouté avec succès !");
+                liste_medecin.DataContext = MainWindow.myBDD.Medecins.ToList();
+                ajouter_med.Content = "Ajouter nouveau médecin";
+                return true; 
+            }
+            else
+            {
+                MessageBox.Show("Erreur! Vous devez entrez un nom et un prénom pour le médecin à ajouter avant de confirmer");
+                return false; 
+            }
+        }
+
+        private bool AjouterMedecin()
+        {
+            txt_nom.Clear();
+            txt_prenom.Clear();
+
+            ajouter_med.Content = "Confirmer";
+            return false; 
         }
 
         private void modifier_med_Click(object sender, RoutedEventArgs e)
@@ -130,35 +146,41 @@ namespace graph2_projet_integrateur
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message);
             }
         }
 
         private void supprimer_med_Click(object sender, RoutedEventArgs e)
         {
-            Medecin med = liste_medecin.SelectedItem as Medecin;
-
-            var result = MessageBox.Show($"Êtes-vous sur de vouloir supprimer {med.Prenom} {med.Nom}, numéro ID : {med.IDMedecin} ?"
-               , "Confirmation", MessageBoxButton.YesNo);
-
-            if (result == MessageBoxResult.Yes)
+            if (liste_medecin.SelectedIndex > -1)
             {
-                try
-                {
-                    txt_nom.Text = String.Empty;
-                    txt_prenom.Text = String.Empty;
-                    MainWindow.myBDD.Medecins.Remove(med);
-                    MainWindow.myBDD.SaveChanges();
-                    MessageBox.Show("Médecin supprimé avec succès !");
-                    liste_medecin.DataContext = MainWindow.myBDD.Medecins.ToList();
+                Medecin med = liste_medecin.SelectedItem as Medecin;
 
-                }
-                catch (Exception ex)
-                {
+                var result = MessageBox.Show($"Êtes-vous sur de vouloir supprimer {med.Prenom} {med.Nom}, numéro ID : {med.IDMedecin} ?"
+                   , "Confirmation", MessageBoxButton.YesNo);
 
-                    MessageBox.Show(ex.Message);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        txt_nom.Text = String.Empty;
+                        txt_prenom.Text = String.Empty;
+                        MainWindow.myBDD.Medecins.Remove(med);
+                        MainWindow.myBDD.SaveChanges();
+                        MessageBox.Show("Médecin supprimé avec succès !");
+                        liste_medecin.DataContext = MainWindow.myBDD.Medecins.ToList();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
+                medecinSupp = true; 
+            }
+            else
+            {
+                MessageBox.Show("Vous devez selectionner le médecin à supprimer.");
             }
 
         }

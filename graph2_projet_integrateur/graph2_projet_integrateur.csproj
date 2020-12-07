@@ -73,6 +73,9 @@
     <Compile Include="Departement.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="FormMedecin.xaml.cs">
+      <DependentUpon>FormMedecin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Gestion.cs" />
     <Compile Include="Lit.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -104,6 +107,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Page Include="Administration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormMedecin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
