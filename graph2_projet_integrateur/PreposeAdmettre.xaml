@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Admettre Patient" Height="388" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DataGrid HorizontalAlignment="Left" Height="42" Margin="257,10,0,0" VerticalAlignment="Top" Width="288"/>
+        <DataGrid x:Name="datagrid_patient" HorizontalAlignment="Left" Height="42" Margin="257,10,0,0" VerticalAlignment="Top" Width="288"/>
         <Label Content="Chirurgie&#xD;&#xA;programmée" HorizontalAlignment="Left" Margin="88,93,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbo_Chirurgie" HorizontalAlignment="Left" Margin="191,104,0,0" VerticalAlignment="Top" Width="120"/>
         <DatePicker x:Name="date_Admission" HorizontalAlignment="Left" Margin="191,154,0,0" VerticalAlignment="Top" Width="120"/>
@@ -15,7 +15,7 @@
         <DatePicker x:Name="date_Chirurgie" HorizontalAlignment="Left" Margin="191,207,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Chirurgie" HorizontalAlignment="Left" Margin="88,205,0,0" VerticalAlignment="Top"/>
         <Label Content="Médecin" HorizontalAlignment="Left" Margin="449,100,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbo_Medecin" HorizontalAlignment="Left" Margin="534,104,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cbo_Medecin" DataContext="{Binding Nom}" HorizontalAlignment="Left" Margin="534,104,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Lit" HorizontalAlignment="Left" Margin="449,150,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbo_Lit" HorizontalAlignment="Left" Margin="534,154,0,0" VerticalAlignment="Top" Width="120"/>
         <CheckBox x:Name="ck_Televiseur" Content="Téléviseur" HorizontalAlignment="Left" Margin="447,211,0,0" VerticalAlignment="Top" />

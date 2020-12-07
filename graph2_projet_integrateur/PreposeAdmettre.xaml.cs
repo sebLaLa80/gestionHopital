@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,48 @@ namespace graph2_projet_integrateur
         Patient patient; 
         public PreposeAdmettre(Patient p)
         {
-            patient = p; 
+            patient = p;
+            //datagrid_patient.DataContext = p; 
+
+            //cbo_Chirurgie.ItemsSource = ListeChirurgie();
+            //cbo_Medecin.DataContext = ListeMedecin(); 
+            //cbo_Lit.ItemsSource = ListeLit();
+
             InitializeComponent();
+        }
+
+        private IEnumerable ListeLit()
+        {
+            List<string> listeLit = new List<string>();
+
+            listeLit.Add("Privée");
+            listeLit.Add("Semi-privée");
+            listeLit.Add("Standard");
+
+            return listeLit;
+        }
+
+        private IEnumerable ListeMedecin()
+        {
+            var queryPatients =
+
+            from a in MainWindow.myBDD.Admissions
+            join p in MainWindow.myBDD.Patients on a.NSS equals p.NSS
+            join m in MainWindow.myBDD.Medecins on a.IDMedecin equals m.IDMedecin
+            select new { p.Nom, p.Prenom, p.NSS, a.DateAdmission, a.DateChirurgie, a.NumeroLit, nomMedecin = m.Nom };
+
+            return MainWindow.myBDD.Medecins.ToList();
+        }
+
+        private IEnumerable ListeChirurgie()
+        {
+            List<string> listeChirurgie = new List<string>();
+
+            listeChirurgie.Add("Chirurgie mineure");
+            listeChirurgie.Add("Blépharosplastie");
+            listeChirurgie.Add("Digestive");
+
+            return listeChirurgie;
         }
 
         private void Admettre_Click(object sender, RoutedEventArgs e)
@@ -47,12 +88,36 @@ namespace graph2_projet_integrateur
             DateTime dateAdmission = RecupererDateAdmission();
             Nullable<DateTime> dateChirurgie = RecupererDateChirurgie();
             //Date congé = null    
-            string typeDuLit = RecupererLit();
+            string patientLit = RecupererLit();
             bool televiseur = (bool) ck_Televiseur.IsChecked ? true : false;
             bool telephone = (bool)ck_Telephone.IsChecked ? true : false;
-            string PatientNSS = patient.NSS; 
+            string patientNSS = patient.NSS;
 
-            //Créer une nouvelle admission et assigner les valeurs
+            try
+            {
+
+                Admission nouvelleAdmission = new Admission();
+
+                nouvelleAdmission.IDAdmission = IDadmission;
+                nouvelleAdmission.ChirurgieProgrammee = chirurgie;
+                nouvelleAdmission.DateAdmission = dateAdmission;
+                nouvelleAdmission.DateChirurgie = dateChirurgie;
+                nouvelleAdmission.Telephone = telephone;
+                nouvelleAdmission.Televiseur = televiseur;
+                nouvelleAdmission.NSS = patientNSS;
+                nouvelleAdmission.NumeroLit = patientLit;
+                nouvelleAdmission.IDMedecin = IDmedecin;
+
+                MainWindow.myBDD.Admissions.Add(nouvelleAdmission);
+                MainWindow.myBDD.SaveChanges();
+
+                MessageBox.Show("Admission ajoutée avec succès.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
 
         }
 
