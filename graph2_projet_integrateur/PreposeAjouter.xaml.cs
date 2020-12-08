@@ -27,47 +27,104 @@ namespace graph2_projet_integrateur
 
         private void btn_ajouter_Click(object sender, RoutedEventArgs e)
         {
-            Patient nouveauPatient = new Patient();
-            nouveauPatient.NSS = txt_nss.Text;
-            nouveauPatient.DateNaissance = dpick_ddn.SelectedDate;
-            nouveauPatient.Nom = txt_nom.Text;
-            nouveauPatient.Prenom = txt_prenom.Text;
-            nouveauPatient.Adresse = txt_adresse.Text;
-            nouveauPatient.Ville = txt_ville.Text;
-            nouveauPatient.Province = txt_province.Text;
-            nouveauPatient.CodePostal = txt_cp.Text;
-            nouveauPatient.Telephone = txt_telephone.Text;
-            Assurance nouvelle = cbox_assurance.SelectedItem as Assurance;
-            nouveauPatient.IDAssurance = nouvelle.IDAssurance;
+            AjouterPatient(); 
+        }
 
-            if (MainWindow.ges.VerifierNSS(nouveauPatient))
+        private void AjouterPatient()
+        {
+            if (VerificationData())
             {
-                try
+                Patient nouveauPatient = new Patient();
+
+                nouveauPatient.NSS = txt_nss.Text;
+                nouveauPatient.DateNaissance = dpick_ddn.SelectedDate;
+                nouveauPatient.Nom = txt_nom.Text;
+                nouveauPatient.Prenom = txt_prenom.Text;
+                nouveauPatient.Adresse = txt_adresse.Text;
+                nouveauPatient.Ville = txt_ville.Text;
+                nouveauPatient.Province = txt_province.Text;
+                nouveauPatient.CodePostal = txt_cp.Text;
+                nouveauPatient.Telephone = txt_telephone.Text;
+                Assurance nouvelle = cbox_assurance.SelectedItem as Assurance;
+                nouveauPatient.IDAssurance = nouvelle.IDAssurance;
+
+                if (MainWindow.ges.VerifierNSS(nouveauPatient))
                 {
-                    MainWindow.myBDD.Patients.Add(nouveauPatient);
-                    MainWindow.myBDD.SaveChanges();
-                    MessageBox.Show("Patient ajouté avec succès !");
-                    Prepose prep = new Prepose();
-                    prep.Show();
-                    this.Close();
+                    try
+                    {
+                        MainWindow.myBDD.Patients.Add(nouveauPatient);
+                        MainWindow.myBDD.SaveChanges();
+                        MessageBox.Show("Patient ajouté avec succès !");
+                        Prepose prep = new Prepose();
+                        prep.Show();
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Ce NAS est déja existant !");
                 }
 
-            }
-            else
+            } else
             {
-                MessageBox.Show("Ce NAS est déja existant !");
+                MessageBox.Show("Vous devez entrer toutes les informations correspondantes pour ce nouveau patient.");
             }
+        }
 
+        private bool VerificationData()
+        {
+            
+            if(String.IsNullOrEmpty(txt_nss.Text))
+            {
+                return false; 
+            }
+            if (!dpick_ddn.SelectedDate.HasValue)
+            {
+                return false; 
+            }
+            if(String.IsNullOrEmpty(txt_nom.Text))
+            {
+                return false; 
+            }
+            if (String.IsNullOrEmpty(txt_prenom.Text))
+            {
+                return false;
+            }
+            if (String.IsNullOrEmpty(txt_adresse.Text))
+            {
+                return false;
+            }
+            if (String.IsNullOrEmpty(txt_ville.Text))
+            {
+                return false;
+            }
+            if (String.IsNullOrEmpty(txt_province.Text))
+            {
+                return false;
+            }
+            if (String.IsNullOrEmpty(txt_cp.Text))
+            {
+                return false;
+            }
+            if (String.IsNullOrEmpty(txt_telephone.Text))
+            {
+                return false;
+            }
+            if (!(cbox_assurance.SelectedIndex > -1))
+            {
+                return false;
+            }
+            return true; 
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             System.Data.DataTable tbl = new System.Data.DataTable();
-
 
             Assurance aucune = new Assurance();
             aucune.IDAssurance = null;
@@ -79,8 +136,6 @@ namespace graph2_projet_integrateur
             {
                 cbox_assurance.Items.Add(item);
             }
-
-
         }
     }
 }

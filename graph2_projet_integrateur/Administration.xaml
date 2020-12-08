@@ -59,9 +59,9 @@
                     <TextBox x:Name="txt_prenom" HorizontalAlignment="Left" Height="23" Margin="391,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="178"/>
                     <Label Content="Nom" HorizontalAlignment="Left" Margin="318,100,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txt_nom" HorizontalAlignment="Left" Height="23" Margin="391,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="178"/>
-                    <Button x:Name="ajouter_med" Content="Ajouter" HorizontalAlignment="Left" Margin="324,194,0,0" VerticalAlignment="Top" Width="75" Click="ajouter_med_Click"/>
-                    <Button x:Name="modifier_med" Content="Modifier" HorizontalAlignment="Left" Margin="324,264,0,0" VerticalAlignment="Top" Width="75" Click="modifier_med_Click"/>
-                    <Button x:Name="supprimer_med" Content="Supprimer" HorizontalAlignment="Left" Margin="324,334,0,0" VerticalAlignment="Top" Width="75" Click="supprimer_med_Click"/>
+                    <Button x:Name="ajouter_med" Content="Ajouter nouveau médecin" HorizontalAlignment="Left" Margin="324,194,0,0" VerticalAlignment="Top" Width="170" Click="ajouter_med_Click"/>
+                    <Button x:Name="modifier_med" Content="Modifier" HorizontalAlignment="Left" Margin="324,264,0,0" VerticalAlignment="Top" Width="170" Click="modifier_med_Click"/>
+                    <Button x:Name="supprimer_med" Content="Supprimer" HorizontalAlignment="Left" Margin="324,334,0,0" VerticalAlignment="Top" Width="170" Click="supprimer_med_Click"/>
                     <DataGrid x:Name="liste_medecin" HorizontalAlignment="Left" Height="310" Margin="29,44,0,0" VerticalAlignment="Top" Width="218" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="liste_medecin_SelectionChanged" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding IDMedecin}" />
