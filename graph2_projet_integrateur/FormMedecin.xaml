@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:graph2_projet_integrateur"
         mc:Ignorable="d"
-        Title="FormMedecin" Height="450" Width="800">
+        Title="FormMedecin" Height="450" Width="800" Loaded="Window_Loaded_1">
     <Grid>
         <DataGrid Name="dataGridPatient" AlternatingRowBackground="#FFB1DEB1" RowBackground="#FFEB5E39" Margin="10,55,10,96" AutoGenerateColumns="False" ItemsSource="{Binding}">
             <DataGrid.Columns>

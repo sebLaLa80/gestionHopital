@@ -11,10 +11,11 @@
             <TabItem Header="Admissions" Width="150">
                 <Grid Background="#FFE5E5E5" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="102*"/>
-                        <ColumnDefinition Width="245*"/>
+                        <ColumnDefinition Width="204*"/>
+                        <ColumnDefinition Width="41*"/>
+                        <ColumnDefinition Width="449*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid Name="dataGrid1" AlternatingRowBackground="#FFB1DEB1" RowBackground="#FFEB5E39" AutoGenerateColumns="False" ItemsSource="{Binding}" Margin="0,0,0,432" VerticalScrollBarVisibility="Visible" SelectionChanged="dataGrid1_SelectionChanged" Grid.ColumnSpan="2">
+                    <DataGrid Name="dataGrid1" AlternatingRowBackground="#FFB1DEB1" RowBackground="#FFEB5E39" AutoGenerateColumns="False" ItemsSource="{Binding}" Margin="0,0,0,432" VerticalScrollBarVisibility="Visible" SelectionChanged="dataGrid1_SelectionChanged" Grid.ColumnSpan="3">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" />
                             <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" />
@@ -25,7 +26,7 @@
                             <DataGridTextColumn Header="Nom du médecin" Binding="{Binding nomMedecin}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <GroupBox Header="Patient" HorizontalAlignment="Left" Height="270" Margin="38,268,0,0" VerticalAlignment="Top" Width="620" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                    <GroupBox Header="Patient" HorizontalAlignment="Left" Height="270" Margin="38,268,0,0" VerticalAlignment="Top" Width="620" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3">
                         <GroupBox.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>

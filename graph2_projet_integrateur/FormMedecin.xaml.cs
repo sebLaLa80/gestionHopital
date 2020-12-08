@@ -35,7 +35,7 @@ namespace graph2_projet_integrateur
             }
 
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
             var queryPatients =
 
@@ -93,5 +93,7 @@ namespace graph2_projet_integrateur
 
             dataGridPatient.DataContext = queryRecherche.ToList();
         }
+
+        
     }
 }

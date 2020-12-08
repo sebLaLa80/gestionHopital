@@ -5,9 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:graph2_projet_integrateur"
         mc:Ignorable="d"
-        Title="Admettre Patient" Height="388" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Admettre Patient" Height="388" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
-        <DataGrid HorizontalAlignment="Left" Height="42" Margin="257,10,0,0" VerticalAlignment="Top" Width="288"/>
+        <DataGrid x:Name="dgInfoPatient" HorizontalAlignment="Left" Height="62" Margin="257,10,0,0" VerticalAlignment="Top" Width="288" AutoGenerateColumns="False" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" />
+                <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" />
+                <DataGridTextColumn Header="NAS" Binding="{Binding NSS}" />
+                <DataGridTextColumn Header="Adresse" Binding="{Binding Adresse}" />
+                <DataGridTextColumn Header="Téléphone" Binding="{Binding Telephone}" />
+            </DataGrid.Columns>
+        </DataGrid>
         <Label Content="Chirurgie&#xD;&#xA;programmée" HorizontalAlignment="Left" Margin="88,93,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbo_Chirurgie" HorizontalAlignment="Left" Margin="191,104,0,0" VerticalAlignment="Top" Width="120"/>
         <DatePicker x:Name="date_Admission" HorizontalAlignment="Left" Margin="191,154,0,0" VerticalAlignment="Top" Width="120"/>
@@ -15,9 +23,9 @@
         <DatePicker x:Name="date_Chirurgie" HorizontalAlignment="Left" Margin="191,207,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Chirurgie" HorizontalAlignment="Left" Margin="88,205,0,0" VerticalAlignment="Top"/>
         <Label Content="Médecin" HorizontalAlignment="Left" Margin="449,100,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbo_Medecin" HorizontalAlignment="Left" Margin="534,104,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cbo_Medecin" HorizontalAlignment="Left" Margin="534,104,0,0" VerticalAlignment="Top" Width="120" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Nom"/>
         <Label Content="Lit" HorizontalAlignment="Left" Margin="449,150,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbo_Lit" HorizontalAlignment="Left" Margin="534,154,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cbo_Lit" HorizontalAlignment="Left" Margin="534,154,0,0" VerticalAlignment="Top" Width="120" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="NumeroLit"/>
         <CheckBox x:Name="ck_Televiseur" Content="Téléviseur" HorizontalAlignment="Left" Margin="447,211,0,0" VerticalAlignment="Top" />
         <CheckBox x:Name="ck_Telephone" Content="Téléphone" HorizontalAlignment="Left" Margin="579,211,0,0" VerticalAlignment="Top" />
         <Button Content="Admettre" HorizontalAlignment="Left" Margin="257,269,0,0" VerticalAlignment="Top" Width="75" Click="Admettre_Click"/>

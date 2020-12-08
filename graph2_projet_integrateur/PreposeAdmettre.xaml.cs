@@ -191,5 +191,17 @@ namespace graph2_projet_integrateur
             }
             return false; 
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var patients = new List<Patient>();
+            patients.Add(patient);
+            
+            dgInfoPatient.DataContext = patients;
+
+            cbo_Medecin.DataContext = MainWindow.myBDD.Medecins.ToList();
+
+            cbo_Lit.DataContext = MainWindow.ges.getLit(patient);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,9 +69,19 @@ namespace graph2_projet_integrateur
         { 
             if(dataGridPatient.SelectedIndex > -1)
             {
+
+
+                dynamic row = dataGridPatient.SelectedItem;
+
+
+                string selectedNSS = row.NSS;
+
+
+                Patient p = MainWindow.myBDD.Patients.Single(a => a.NSS == selectedNSS);
+
                 //prendre le NSS de la sélection
                 //chercher le patient avec ce NSS
-                Patient p = new Patient(); //remplacer le "new Patient()"; par celui qu'on a été cherché avec le NSS
+
                 PreposeAdmettre prep = new PreposeAdmettre(p);
                 prep.Show();
                 this.Close();
