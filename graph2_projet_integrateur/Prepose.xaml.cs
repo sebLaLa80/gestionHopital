@@ -79,9 +79,6 @@ namespace graph2_projet_integrateur
 
                 Patient p = MainWindow.myBDD.Patients.Single(a => a.NSS == selectedNSS);
 
-                //prendre le NSS de la sélection
-                //chercher le patient avec ce NSS
-
                 PreposeAdmettre prep = new PreposeAdmettre(p);
                 prep.Show();
                 this.Close();

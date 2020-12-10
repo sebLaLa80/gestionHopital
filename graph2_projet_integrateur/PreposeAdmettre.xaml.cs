@@ -19,7 +19,7 @@ namespace graph2_projet_integrateur
     /// </summary>
     public partial class PreposeAdmettre : Window
     {
-        Patient patient; 
+        Patient patient;
         public PreposeAdmettre(Patient p)
         {
             patient = p; 
@@ -47,12 +47,79 @@ namespace graph2_projet_integrateur
             DateTime dateAdmission = RecupererDateAdmission();
             Nullable<DateTime> dateChirurgie = RecupererDateChirurgie();
             //Date congé = null    
-            string typeDuLit = RecupererLit();
+            Lit litAdmission = DeterminerLit(RecupererLit(), chirurgie, GetAge(patient));
+            string numeroDuLit = litAdmission.NumeroLit.ToString();
             bool televiseur = (bool) ck_Televiseur.IsChecked ? true : false;
             bool telephone = (bool)ck_Telephone.IsChecked ? true : false;
-            string PatientNSS = patient.NSS; 
+            string PatientNSS = patient.NSS;
 
-            //Créer une nouvelle admission et assigner les valeurs
+            Admission nouvelleAdmission = new Admission();
+            nouvelleAdmission.IDAdmission = IDadmission;
+            nouvelleAdmission.DateAdmission = dateAdmission;
+            nouvelleAdmission.IDMedecin = IDmedecin;
+            nouvelleAdmission.ChirurgieProgrammee = chirurgie;
+            nouvelleAdmission.DateChirurgie = dateChirurgie;
+            nouvelleAdmission.Lit = litAdmission;
+            nouvelleAdmission.NumeroLit = numeroDuLit;
+            nouvelleAdmission.Telephone = telephone;
+            nouvelleAdmission.Televiseur = televiseur;
+            nouvelleAdmission.Patient = patient;
+
+            MainWindow.myBDD.Admissions.Add(nouvelleAdmission);
+            MainWindow.myBDD.SaveChanges();
+            MessageBox.Show("Admission ajouté avec succès !");
+
+        }
+
+        private int GetAge(Patient patient)
+        {
+            DateTime dateNaissance = patient.DateNaissance.Value;
+            DateTime dateAujourdhui = DateTime.Today;
+            int age = dateAujourdhui.Year - dateNaissance.Year; 
+            if(dateNaissance > dateAujourdhui.AddYears(-age))
+            {
+                age--;
+            }
+
+            return age; 
+        }
+
+        private Lit DeterminerLit(string typeDeLit, string chirurgie, int agePatient)
+        {
+            List<Lit> listeLit = RecupererListeLit();
+
+            foreach(Lit l in listeLit)
+            {
+                if(agePatient <= 16)
+                {
+                    if (l.TypeLit.Equals("Pédiatrie"))
+                    {
+                        l.Occupe = true;
+                        return l; 
+                    }
+                } else
+                {
+                    if (l.Departement.Equals(chirurgie))
+                    {
+                        l.Occupe = true;
+                        return l;
+                    }
+                }
+            }
+
+            MessageBox.Show("Il n'y a plus de lit disponible pour cette opération ou ce patient!");
+
+            return null;
+        }
+
+        private List<Lit> RecupererListeLit()
+        {
+
+            var queryLits = MainWindow.myBDD.Lits.Where(Occupe => Occupe.Equals(0));
+
+            List<Lit> listeLitNonOccupee = queryLits.ToList();
+
+            return listeLitNonOccupee; 
 
         }
 
@@ -64,16 +131,8 @@ namespace graph2_projet_integrateur
 
         private string RecupererLit()
         {
-            //récupérer le choix
-            //faire les vérifications obligatoires: 
-                //Lorsqu’un patient n’est pas couvert par une assurance privée : s’il n’y a plus de lits disponibles dans une chambre standard alors le préposé aux admissions peut sélectionner, sans aucun frais supplémentaire, la chambre semi-privée de son choix. Le préposé aux admissions peut sélectionner, sans frais supplémentaires, une chambre privée lorsque toutes les chambres semi-privées sont occupées
-                //Les patients qui vont subir une chirurgie sont automatiquement affectés à une chambre du département de chirurgie si un lit correspondant au type choisi est disponible. Dans le cas contraire, l’utilisateur peut sélectionner un autre type de lit ou une autre chambre disponible
-                //Les patients qui sont âgés de 16 ans ou moins qui ne sont pas admis pour une chirurgie sont automatiquement dirigés vers les chambres du département de pédiatrie lorsqu’un lit correspondant au type choisi est disponible. Dans le cas contraire, l’utilisateur peut sélectionner un autre type de lit ou une autre chambre disponible
-
-            //sinon, vérifier s'il reste un lit de ce choix et le prendre. 
-            //sinon, prendre le prochain lit disponible peu importe le choix. 
-            
-            return "";
+            string typeDeLit = cbo_Lit.Text;
+            return typeDeLit;
         }
 
         private Nullable<DateTime> RecupererDateChirurgie()

@@ -58,17 +58,29 @@ namespace graph2_projet_integrateur
 
             if(dataGridPatient.SelectedIndex > -1)
             {
-                //selectionner le patient
-                //changer la date de congé
-                //libérer le lit
-                //écrire un message qui confirme que le patient a été libéré
-                //calculer le prix???
+
+                dynamic row = dataGridPatient.SelectedItem;
+
+                string selectedNSS = row.NSS;
+
+                Patient p = MainWindow.myBDD.Patients.Single(a => a.NSS == selectedNSS);
+
+                string IDadmission = p.Admissions.IDAdmission;
+
+                Admission a = MainWindow.myBDD.Admissions.Single(a => a.IDAdmission == IDadmission);
+
+                a.Lit.Occupe = false;
+                a.DateDuConge = DateTime.Today;
+
+                //calculer le prix
+                int prix = 0;
+
+                MessageBox.Show($"Le patient a été libéré! Sa facture s'élève à {prix}$");
+
             } else
             {
                 MessageBox.Show("Vous devez sélectionner un patient!");
             }
-
-
         }
 
         private void TextBox_KeyUp(object sender, KeyEventArgs e)
