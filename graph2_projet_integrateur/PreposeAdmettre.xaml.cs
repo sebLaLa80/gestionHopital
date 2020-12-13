@@ -41,14 +41,15 @@ namespace graph2_projet_integrateur
 
         private void NouvelleAdmission()
         {
-            string IDmedecin = RecupererIDMedecin(); 
+            string IDmedecin = RecupererIDMedecin().Trim(); 
             string IDadmission = RecupererAdmission();
             string chirurgie = RecupererChirurgie();
             DateTime dateAdmission = RecupererDateAdmission();
             Nullable<DateTime> dateChirurgie = RecupererDateChirurgie();
             //Date congé = null    
             Lit litAdmission = DeterminerLit(RecupererLit(), chirurgie, GetAge(patient));
-            string numeroDuLit = litAdmission.NumeroLit.ToString();
+            litAdmission.Occupe = true;
+            string numeroDuLit = litAdmission.NumeroLit.ToString().Trim();
             bool televiseur = (bool) ck_Televiseur.IsChecked ? true : false;
             bool telephone = (bool)ck_Telephone.IsChecked ? true : false;
             string PatientNSS = patient.NSS;
@@ -59,15 +60,24 @@ namespace graph2_projet_integrateur
             nouvelleAdmission.IDMedecin = IDmedecin;
             nouvelleAdmission.ChirurgieProgrammee = chirurgie;
             nouvelleAdmission.DateChirurgie = dateChirurgie;
-            nouvelleAdmission.Lit = litAdmission;
+            //nouvelleAdmission.Lit = litAdmission; ce sont des attr de navigation, ils nexistent pas dans la DB relationnelle
             nouvelleAdmission.NumeroLit = numeroDuLit;
             nouvelleAdmission.Telephone = telephone;
             nouvelleAdmission.Televiseur = televiseur;
-            nouvelleAdmission.Patient = patient;
+            nouvelleAdmission.NSS = patient.NSS;
 
-            MainWindow.myBDD.Admissions.Add(nouvelleAdmission);
-            MainWindow.myBDD.SaveChanges();
-            MessageBox.Show("Admission ajouté avec succès !");
+            try
+            {
+
+                MainWindow.myBDD.Admissions.Add(nouvelleAdmission);
+                MainWindow.myBDD.SaveChanges();
+                MessageBox.Show("Admission ajouté avec succès !");
+            }
+            
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
@@ -97,14 +107,13 @@ namespace graph2_projet_integrateur
                         l.Occupe = true;
                         return l; 
                     }
-                } else
-                {
-                    if (l.Departement.Equals(chirurgie))
+                } else if (l.Departement.Equals("Chirurgie") && chirurgie == "1")
                     {
                         l.Occupe = true;
                         return l;
                     }
-                }
+                
+                return listeLit.Last();
             }
 
             MessageBox.Show("Il n'y a plus de lit disponible pour cette opération ou ce patient!");
@@ -115,9 +124,9 @@ namespace graph2_projet_integrateur
         private List<Lit> RecupererListeLit()
         {
 
-            var queryLits = MainWindow.myBDD.Lits.Where(Occupe => Occupe.Equals(0));
 
-            List<Lit> listeLitNonOccupee = queryLits.ToList();
+
+            List<Lit> listeLitNonOccupee = MainWindow.myBDD.Lits.Where(x => x.Occupe == false).ToList();
 
             return listeLitNonOccupee; 
 
@@ -151,19 +160,20 @@ namespace graph2_projet_integrateur
 
         private string RecupererChirurgie()
         {
-            return cbo_Chirurgie.SelectedItem.ToString();
+            return cbo_Chirurgie.SelectedIndex.ToString();
         }
 
         private string RecupererAdmission()
         {
 
-            var query = 
-                from admission in MainWindow.myBDD.Admissions group admission by admission.DateAdmission into a 
-                select a.OrderByDescending(g => g.DateAdmission).FirstOrDefault(); 
+            string derniereAdminssionID = MainWindow.myBDD.Admissions.Max(x => x.IDAdmission).ToString().Trim();
+            int result = Int32.Parse(derniereAdminssionID);
+            result++;
+            return result.ToString();
+            
 
-            string idadmission = (Int32.Parse(query.FirstOrDefault().IDAdmission) + 1).ToString(); 
 
-            return idadmission;
+
         }
 
         private bool VerificationData()
@@ -197,7 +207,7 @@ namespace graph2_projet_integrateur
 
         private bool VertificationMedecin()
         {
-            if(!(cbo_Medecin.SelectedIndex > -1))
+            if(!(cbo_Medecin.SelectedIndex < -1))
             {
                 return true;
             }
@@ -206,7 +216,7 @@ namespace graph2_projet_integrateur
 
         private bool VertificationDate()
         {
-            if ((!date_Admission.SelectedDate.HasValue))
+            if ((date_Admission.SelectedDate.HasValue))
             {
                 return true;
             }
@@ -215,7 +225,7 @@ namespace graph2_projet_integrateur
 
         private bool VertificationLit()
         {
-            if (!(cbo_Lit.SelectedIndex > -1))
+            if (!(cbo_Lit.SelectedIndex < -1))
             {
                 return true;
             }
@@ -237,12 +247,8 @@ namespace graph2_projet_integrateur
 
         private bool VerificationLitDisponible()
         {
-            var query =
-                    from lits in MainWindow.myBDD.Lits
-                    where lits.Occupe.Equals(0)
-                    select new { lits.NumeroLit };
 
-            int nombreDeLitDisponible = query.Count();
+            int nombreDeLitDisponible = MainWindow.myBDD.Lits.Where(x => x.Occupe == false).Count();
 
             if(nombreDeLitDisponible > 0)
             {

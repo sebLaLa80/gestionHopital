@@ -11,9 +11,11 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" />
                 <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" />
-                <DataGridTextColumn Header="NAS" Binding="{Binding NSS}" />
-                <DataGridTextColumn Header="Adresse" Binding="{Binding Adresse}" />
-                <DataGridTextColumn Header="Téléphone" Binding="{Binding Telephone}" />
+                <DataGridTextColumn Header="NSS" Binding="{Binding NSS}" />
+                <DataGridTextColumn Header="Date d'admission" Binding="{Binding DateAdmission}" />
+                <DataGridTextColumn Header="Date de chirurgie" Binding="{Binding DateChirurgie}" />
+                <DataGridTextColumn Header="# du lit" Binding="{Binding NumeroLit}" />
+                <DataGridTextColumn Header="Nom du médecin" Binding="{Binding nomMedecin}" />
             </DataGrid.Columns>
         </DataGrid>
         <TextBox x:Name="txt_recherche" HorizontalAlignment="Center" Height="40" Margin="0,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="401" KeyUp="TextBox_KeyUp"/>

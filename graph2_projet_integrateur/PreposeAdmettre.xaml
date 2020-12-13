@@ -16,10 +16,13 @@
                 <DataGridTextColumn Header="Téléphone" Binding="{Binding Telephone}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Chirurgie&#xD;&#xA;programmée" HorizontalAlignment="Left" Margin="88,93,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbo_Chirurgie" HorizontalAlignment="Left" Margin="191,104,0,0" VerticalAlignment="Top" Width="120"/>
-        <DatePicker x:Name="date_Admission" HorizontalAlignment="Left" Margin="191,154,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Admission" HorizontalAlignment="Left" Margin="88,152,0,0" VerticalAlignment="Top"/>
+        <Label Content="Chirurgie&#xD;&#xA;programmée" HorizontalAlignment="Left" Margin="88,142,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbo_Chirurgie" HorizontalAlignment="Left" Margin="191,153,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Non" IsSelected="True"></ComboBoxItem>
+            <ComboBoxItem Content="Oui" ></ComboBoxItem>
+        </ComboBox>
+        <DatePicker x:Name="date_Admission" HorizontalAlignment="Left" Margin="191,100,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Admission" HorizontalAlignment="Left" Margin="88,98,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="date_Chirurgie" HorizontalAlignment="Left" Margin="191,207,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Chirurgie" HorizontalAlignment="Left" Margin="88,205,0,0" VerticalAlignment="Top"/>
         <Label Content="Médecin" HorizontalAlignment="Left" Margin="449,100,0,0" VerticalAlignment="Top"/>

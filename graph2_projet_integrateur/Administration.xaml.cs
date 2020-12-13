@@ -36,6 +36,8 @@ namespace graph2_projet_integrateur
            from a in MainWindow.myBDD.Admissions
            join p in MainWindow.myBDD.Patients on a.NSS equals p.NSS
            join m in MainWindow.myBDD.Medecins on a.IDMedecin equals m.IDMedecin 
+           join l in MainWindow.myBDD.Lits on a.NumeroLit equals l.NumeroLit
+           where l.Occupe == true
            select new { p.Nom, p.Prenom, p.NSS, a.DateAdmission, a.DateChirurgie, a.NumeroLit, nomMedecin = m.Nom};
 
            dataGrid1.DataContext = queryPatients.ToList();
